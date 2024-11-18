@@ -5,7 +5,12 @@ LABEL maintainer="Andronikos Nedos <andronikos.nedos@radpool.org>"
 # Arguments for Bitcoin Core version and signature
 ARG VERSION=28.0
 ARG ARCH=x86_64
-ARG BITCOIN_CORE_SIGNATURE=7fe294b02b25b51acb8e8e0a0eb5af6bbafa7cd0c5b0e5fcbb61263104a82fbc
+# Wladimir J. van der Laan
+ARG BITCOIN_CORE_SIGNATURE=71A3B16735405025D447E8F274810B012346C9A6
+
+# import public keys from trusted bitcoin devs
+RUN git clone https://github.com/bitcoin-core/guix.sigs
+RUN gpg --import guix.sigs/builder-keys/*
 
 # Install dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -24,7 +29,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 
 # Fetch, verify, and extract Bitcoin Core
 RUN cd /tmp \
-    && gpg --keyserver hkp://keyserver.ubuntu.com --recv-keys ${BITCOIN_CORE_SIGNATURE} \
     && wget https://bitcoincore.org/bin/bitcoin-core-${VERSION}/SHA256SUMS.asc \
     https://bitcoincore.org/bin/bitcoin-core-${VERSION}/SHA256SUMS \
     https://bitcoincore.org/bin/bitcoin-core-${VERSION}/bitcoin-${VERSION}-${ARCH}-linux-gnu.tar.gz \
