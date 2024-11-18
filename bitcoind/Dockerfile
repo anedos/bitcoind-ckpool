@@ -8,10 +8,6 @@ ARG ARCH=x86_64
 # Wladimir J. van der Laan
 ARG BITCOIN_CORE_SIGNATURE=71A3B16735405025D447E8F274810B012346C9A6
 
-# import public keys from trusted bitcoin devs
-RUN git clone https://github.com/bitcoin-core/guix.sigs
-RUN gpg --import guix.sigs/builder-keys/*
-
 # Install dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     git \
@@ -27,6 +23,10 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-ins
     libatomic1 \
     wget \
     && rm -rf /var/lib/apt/lists/*
+
+# import public keys from trusted bitcoin devs
+RUN git clone https://github.com/bitcoin-core/guix.sigs
+RUN gpg --import guix.sigs/builder-keys/*
 
 # Fetch, verify, and extract Bitcoin Core
 RUN cd /tmp \
