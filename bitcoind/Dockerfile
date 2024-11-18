@@ -13,7 +13,7 @@ RUN git clone https://github.com/bitcoin-core/guix.sigs
 RUN gpg --import guix.sigs/builder-keys/*
 
 # Install dependencies
-RUN apt-get update && apt-get install -y --no-install-recommends \
+RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
     gpg \
     gnupg \
     libevent-dev \
