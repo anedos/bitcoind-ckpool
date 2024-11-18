@@ -7,13 +7,21 @@ RUN apt-get update && apt-get install -y \
     libssl-dev \
     libcurl4-openssl-dev \
     libjansson-dev \
+    yasm \
+    libzmq3-dev \
+    pkgconf \
+    autoconf \
+    automake \
+    libtool \
     && rm -rf /var/lib/apt/lists/*
 
 # Clone CKPool repository
-RUN git clone https://github.com/ckolivas/ckpool.git /ckpool
+RUN git clone https://bitbucket.org/ckolivas/ckpool.git /ckpool
 
 # Build CKPool
 WORKDIR /ckpool
+RUN ./autogen.sh
+RUN ./configure
 RUN make
 
 # Expose the CKPool stratum port
