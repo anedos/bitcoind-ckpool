@@ -1,0 +1,49 @@
+version: '3.8'
+
+services:
+  bitcoind:
+    build:
+      context: ./bitcoind
+    container_name: bitcoind
+    volumes:
+      - bitcoind_data:/data
+    ports:
+      - "8332:8332" # JSON-RPC port
+      - "8333:8333" # P2P port
+    environment:
+      BITCOIND_RPC_USER: user
+      BITCOIND_RPC_PASSWORD: password
+      BITCOIND_RPC_ALLOWIP: "0.0.0.0/0"
+    command: >
+      bitcoind
+      -server=1
+      -rpcallowip=0.0.0.0/0
+      -rpcuser=${BITCOIND_RPC_USER}
+      -rpcpassword=${BITCOIND_RPC_PASSWORD}
+      -datadir=/data
+      -txindex=1
+      -printtoconsole=1
+
+  ckpool:
+    build:
+      context: ./ckpool
+    container_name: ckpool
+    ports:
+      - "3333:3333" # Stratum port
+    depends_on:
+      - bitcoind
+    environment:
+      CKPOOL_RPC_HOST: bitcoind
+      CKPOOL_RPC_USER: user
+      CKPOOL_RPC_PASSWORD: password
+    command: >
+      /bin/bash -c "
+      ./ckpool
+      -o http://${CKPOOL_RPC_HOST}:8332
+      -u ${CKPOOL_RPC_USER}
+      -p ${CKPOOL_RPC_PASSWORD} 
+      -P
+      "
+
+volumes:
+  bitcoind_data:
