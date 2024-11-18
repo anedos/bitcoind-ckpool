@@ -14,6 +14,7 @@ RUN gpg --import guix.sigs/builder-keys/*
 
 # Install dependencies
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends \
+    git \
     gpg \
     gnupg \
     libevent-dev \
