@@ -16,6 +16,7 @@ services:
       bitcoind
       -server=1
       -rpcallowip=0.0.0.0/0
+      -rpcbind=0.0.0.0
       -rpcuser=${BITCOIND_RPC_USER}
       -rpcpassword=${BITCOIND_RPC_PASSWORD}
       -datadir=/data
