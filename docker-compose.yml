@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   bitcoind:
     build:
@@ -11,8 +9,8 @@ services:
       - "8332:8332" # JSON-RPC port
       - "8333:8333" # P2P port
     environment:
-      BITCOIND_RPC_USER: user
-      BITCOIND_RPC_PASSWORD: password
+      BITCOIND_RPC_USER: "user"
+      BITCOIND_RPC_PASSWORD: "password"
       BITCOIND_RPC_ALLOWIP: "0.0.0.0/0"
     command: >
       bitcoind
@@ -33,9 +31,9 @@ services:
     depends_on:
       - bitcoind
     environment:
-      CKPOOL_RPC_HOST: bitcoind
-      CKPOOL_RPC_USER: user
-      CKPOOL_RPC_PASSWORD: password
+      CKPOOL_RPC_HOST: "bitcoind"
+      CKPOOL_RPC_USER: "user"
+      CKPOOL_RPC_PASSWORD: "password"
     command: >
       /bin/bash -c "
       ./ckpool
