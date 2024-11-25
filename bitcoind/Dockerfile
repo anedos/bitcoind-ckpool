@@ -1,5 +1,5 @@
 # Use a lightweight base image
-FROM ubuntu:20.04
+FROM ubuntu:24.10
 LABEL maintainer="Andronikos Nedos <andronikos.nedos@radpool.org>"
 
 # Arguments for Bitcoin Core version and signature
