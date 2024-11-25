@@ -12,6 +12,7 @@ services:
       BITCOIND_RPC_USER: "user"
       BITCOIND_RPC_PASSWORD: "password"
       BITCOIND_RPC_ALLOWIP: "0.0.0.0/0"
+    hostname: bitcoind
     command: >
       bitcoind
       -server=1
@@ -35,13 +36,12 @@ services:
       CKPOOL_RPC_HOST: "bitcoind"
       CKPOOL_RPC_USER: "user"
       CKPOOL_RPC_PASSWORD: "password"
+    hostname: ckpool
     command: >
       /bin/bash -c "
-      ./ckpool
-      -o http://${CKPOOL_RPC_HOST}:8332
-      -u ${CKPOOL_RPC_USER}
-      -p ${CKPOOL_RPC_PASSWORD} 
-      -P
+      ckpool
+      -L
+      -c ckpool.conf
       "
 
 volumes:
