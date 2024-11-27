@@ -21,8 +21,8 @@ services:
       -rpcuser=${BITCOIND_RPC_USER}
       -rpcpassword=${BITCOIND_RPC_PASSWORD}
       -datadir=/data
-      -dbcache=16384
-      -maxmempool=1000
+      -dbcache=2000
+      -maxmempool=500
       -txindex=1
       -printtoconsole=1
 
