@@ -22,7 +22,6 @@ services:
       -rpcpassword=${BITCOIND_RPC_PASSWORD}
       -datadir=/data
       -dbcache=2000
-      -maxmempool=500
       -txindex=1
       -printtoconsole=1
 
